@@ -1,21 +1,30 @@
 const fetch = require('node-fetch');
-const restResponse = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/restResponse.js')
+const ApiResponse = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/apiResponse.js')
 
 class RestApiService {
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
     }
 
-    fetchFunction(method, endpoint) {
+    async fetchFunction(method, endpoint) {
         return fetch(`${this.baseUrl}${endpoint}`, {method})
             .then(response => {
-                const body = response.json();
-                return new restResponse(response.status, body);
+                const contentType = response.headers.get("content-type");
+                if(contentType.startsWith("application/json")) {
+                    return response.json().then((body) => {
+                        return new ApiResponse(response.status, body);
+                    })
+                }
+                return new ApiResponse(response.status, {});
             })
+
+        // const response = await fetch(`${this.baseUrl}${endpoint}`, {method});
+        // const body = await response.json();
+        // return new ApiResponse(response.status, body);
     }
 }
 
-module.exports = RestApiService;
+module.exports = new RestApiService('https://swapi.co/api/');
 
 
 //case że nie ma odpowiedzi

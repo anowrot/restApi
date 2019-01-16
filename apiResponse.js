@@ -1,6 +1,7 @@
 const _ = require('lodash');
+let  expect = require('expect');
 
-class RestResponse {
+class ApiResponse {
     constructor(responseStatus, body) {
         this.body = body;
         this.status = responseStatus;
@@ -11,9 +12,8 @@ class RestResponse {
     }
 
     hasMatch(body) {
-        console.log(this.body)
         return _.isEqual(this.body, body);
     }
 }
 
-module.exports = RestResponse;
+module.exports = ApiResponse;

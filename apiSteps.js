@@ -1,5 +1,6 @@
-const RestApiService = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/restApiService.js');
-const service = new RestApiService('https://swapi.co/api/');
+const service = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/restApiService.js');
+const  expect = require('expect');
+
 
 const data = { name: 'Luke Skywalker',
     height: '172',
@@ -35,8 +36,7 @@ function someStep() {
 }
 
 function anotherStep() {
-    console.log(responseResult)
-     return console.log(responseResult.hasStatus(200));
+     return console.log(responseResult.hasMatch(data));
 }
 
 someStep().then(() => anotherStep());
