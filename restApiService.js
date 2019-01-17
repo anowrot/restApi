@@ -1,18 +1,29 @@
 const fetch = require('node-fetch');
-const ApiResponse = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/apiResponse.js')
+const ApiResponse = require('./apiResponse');
+const config = require('./config');
 
 class RestApiService {
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
+        this.headers = {
+            'Content-Type': 'application/json'
+        };
     }
 
-    async fetchFunction(method, endpoint) {
-        return fetch(`${this.baseUrl}${endpoint}`, {method})
+    resolveUrl(endpoint) {
+        return `${this.baseUrl}${endpoint}`;
+    }
+
+    fetch(method, endpoint, payload = false) {
+        const url = this.resolveUrl(endpoint);
+        const body = payload ? JSON.stringify(payload) : undefined;
+
+        return fetch(url, {method, body, headers: this.headers})
             .then(response => {
                 const contentType = response.headers.get("content-type");
                 if(contentType.startsWith("application/json")) {
                     return response.json().then((body) => {
-                        return new ApiResponse(response.status, {});
+                        return new ApiResponse(response.status, body);
                     })
                 }
                 return new ApiResponse(response.status, {});
@@ -24,8 +35,15 @@ class RestApiService {
     }
 }
 
-module.exports = new RestApiService('https://swapi.co/api/');
+module.exports = new RestApiService(config.baseUrl);
 
 
-//case że nie ma odpowiedzi
-// response bedzie a body puste
+// fetch(url, {
+//     method: 'POST', // or 'PUT'
+//     body: JSON.stringify(data), // data can be `string` or {object}!
+//     headers:{
+//         'Content-Type': 'application/json'
+//     }
+// }).then(res => res.json())
+//     .then(response => console.log('Success:', JSON.stringify(response)))
+//     .catch(error => console.error('Error:', error));

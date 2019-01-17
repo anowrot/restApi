@@ -17,6 +17,11 @@ class ApiResponse {
         }
         return _.isEqual(this.body, body);
     }
+
+    isJsonSchema() {
+        console.log(this.status, this.body)
+        //tutaj sprawdzanie czy pasuje do json schema
+    }
 }
 
 module.exports = ApiResponse;

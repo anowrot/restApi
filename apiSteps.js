@@ -1,5 +1,7 @@
 const service = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/restApiService.js');
 const  expect = require('expect');
+const config = require('./config');
+
 
 
 const data = { name: 'Luke Skywalker',
@@ -28,16 +30,23 @@ const data = { name: 'Luke Skywalker',
     edited: '2014-12-20T21:17:56.891000Z',
     url: 'https://swapi.co/api/people/1/' }
 
+const testData = {
+    title: "adam",
+    body: "test"
+};
+
+
 let responseResult;
 
 function someStep() {
-    return service.fetchFunction('get', 'people/1' )
-        .then((response) =>  responseResult = response);
+    return service.fetch('post', 'posts', testData)
+        .then((response) => responseResult = response);
 }
 
 function anotherStep() {
-     return console.log(responseResult.hasMatch(data));
+     return console.log(responseResult.isJsonSchema());
 }
 
 someStep().then(() => anotherStep());
 
+// ,  {'Accept': 'application/json, text/plain. */*', 'Content-type': 'application/json'}
