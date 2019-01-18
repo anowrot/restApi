@@ -23,7 +23,7 @@ class RestApiService {
                 const contentType = response.headers.get("content-type");
                 if(contentType.startsWith("application/json")) {
                     return response.json().then((body) => {
-                        return new ApiResponse(response.status, body);
+                        return new ApiResponse(response.status, body, response.headers);
                     })
                 }
                 return new ApiResponse(response.status, {});

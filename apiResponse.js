@@ -1,10 +1,31 @@
 const _ = require('lodash');
-let  expect = require('expect');
+const Ajv = require('ajv');
+
+const ajv = new Ajv({ allErrors: true });
+
+const schema =
+    {
+        "title": "Posts schema",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "title": {
+                "type": "string"
+            },
+            "body": {
+                "type": "string"
+            }
+        },
+        "required": ["id", "title", "body"]
+    };
 
 class ApiResponse {
-    constructor(responseStatus, body) {
+    constructor(responseStatus, body, headers) {
         this.body = body;
         this.status = responseStatus;
+        this.headers = headers;
     }
 
     hasStatus(status) {
@@ -19,7 +40,13 @@ class ApiResponse {
     }
 
     isJsonSchema() {
+        const test = ajv.compile(schema);
+        const isValid = test(this.body);
+
+        console.log(isValid ? true : { obj: this.body, error: test.errors })
+
         console.log(this.status, this.body)
+        // console.log(this.headers);
         //tutaj sprawdzanie czy pasuje do json schema
     }
 }

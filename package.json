@@ -4,6 +4,7 @@
   "description": "",
   "main": "apiSteps.js",
   "dependencies": {
+    "ajv": "^6.7.0",
     "expect": "^23.6.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
