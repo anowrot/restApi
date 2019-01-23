@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const ApiResponse = require('./apiResponse');
 const config = require('./config');
+global.Headers = fetch.Headers;
 
 class RestApiService {
     constructor(baseUrl) {
@@ -8,6 +9,7 @@ class RestApiService {
         this.headers = {
             'Content-Type': 'application/json'
         };
+        this.myHeaders = new Headers();
     }
 
     resolveUrl(endpoint) {
@@ -15,15 +17,21 @@ class RestApiService {
     }
 
     fetch(method, endpoint, payload = false) {
+        const content = "Hello World";
+        // this.myHeaders.append("Content-type", 'test');
+
         const url = this.resolveUrl(endpoint);
         const body = payload ? JSON.stringify(payload) : undefined;
-
+        // this.headers.append('Content-Type', 'image/jpeg');
         return fetch(url, {method, body, headers: this.headers})
             .then(response => {
+                // console.log("BHeaders"+this.myHeaders)
                 const contentType = response.headers.get("content-type");
+                console.log(response.headers);
+
                 if(contentType.startsWith("application/json")) {
-                    return response.json().then((body) => {
-                        return new ApiResponse(response.status, body, response.headers);
+                    return response.json().then((requestBody) => {
+                        return new ApiResponse(response.status, requestBody, response.headers);
                     })
                 }
                 return new ApiResponse(response.status, {});
@@ -36,14 +44,3 @@ class RestApiService {
 }
 
 module.exports = new RestApiService(config.baseUrl);
-
-
-// fetch(url, {
-//     method: 'POST', // or 'PUT'
-//     body: JSON.stringify(data), // data can be `string` or {object}!
-//     headers:{
-//         'Content-Type': 'application/json'
-//     }
-// }).then(res => res.json())
-//     .then(response => console.log('Success:', JSON.stringify(response)))
-//     .catch(error => console.error('Error:', error));

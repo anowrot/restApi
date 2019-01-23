@@ -1,8 +1,9 @@
 module.exports = {
     testPostData:
         {
-        title: "adam",
-        body: "test"
+            "first_name": "adam",
+            "last_name": "test",
+            "email": "sebastian@codingthesmartway.com"
         },
     serverResponse:
         { name: 'Luke Skywalker',
@@ -46,5 +47,15 @@ module.exports = {
                 }
             },
             "required": ["id", "title", "body"]
+        },
+    deleteResponseSchema:
+        {
+            "title": "Posts schema",
+            "type": "object"
+        },
+    testHeaders:
+        {
+            'Content-Type': 'image/jpeg'
         }
+
 };

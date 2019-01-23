@@ -1,5 +1,5 @@
 module.exports = {
-    baseUrl: 'https://jsonplaceholder.typicode.com/',
+    baseUrl: 'http://localhost:3000/',
     headers: {
     'Content-Type': 'application/json'}
 };

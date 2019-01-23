@@ -11,6 +11,7 @@ class ApiResponse {
     }
 
     hasStatus(status) {
+        console.log(this.body, this.status)
         return this.status === status
     }
 
@@ -23,11 +24,16 @@ class ApiResponse {
 
     hasMatchSchema(schema) {
         const test = ajv.compile(schema);
+        console.log(this.body)
         const isValid = test(this.body);
+        console.log(this.status);
         return isValid ? true : { obj: this.body, error: test.errors };
-        // console.log(this.headers);
-        //tutaj sprawdzanie czy pasuje do json schema
     }
+
+    testHeaders() {
+        // console.log( this.headers);
+        console.log(this.status, this.body)
+    };
 }
 
 module.exports = ApiResponse;
