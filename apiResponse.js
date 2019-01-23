@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const Ajv = require('ajv');
 const ajv = new Ajv({ allErrors: true });
+const data = require('./testData');
+
 
 
 class ApiResponse {
@@ -11,7 +13,6 @@ class ApiResponse {
     }
 
     hasStatus(status) {
-        console.log(this.body, this.status)
         return this.status === status
     }
 
@@ -24,16 +25,16 @@ class ApiResponse {
 
     hasMatchSchema(schema) {
         const test = ajv.compile(schema);
-        console.log(this.body)
         const isValid = test(this.body);
-        console.log(this.status);
         return isValid ? true : { obj: this.body, error: test.errors };
     }
 
-    testHeaders() {
-        // console.log( this.headers);
-        console.log(this.status, this.body)
-    };
+    // testHeaders(testHeaders) {
+    //     const myHeaders = {};
+    //     for (let index = 0; index < testHeaders.length; index++) {
+    //         myHeaders[testHeaders[index][0]] = testHeaders[index][1];
+    //     }
+    // };
 }
 
 module.exports = ApiResponse;

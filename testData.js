@@ -54,8 +54,11 @@ module.exports = {
             "type": "object"
         },
     testHeaders:
-        {
-            'Content-Type': 'image/jpeg'
-        }
+        [
+            ['Content-Type', 'test'],
+            ['accept', 'test'],
+            ['connection', 'test']
+        ]
+
 
 };
