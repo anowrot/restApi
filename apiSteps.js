@@ -1,35 +1,53 @@
-const service = require('/Users/adamnowrot/WebstormProjects/kakuninDrafts/restApiService.js');
-const  expect = require('expect');
-const config = require('./config');
+const service = require('./restApiService');
 const data = require('./testData');
+const ApiRequest = require('./apiRequest');
+
+const someHeaders = data.testHeaders;
 
 let responseResult;
-let requestHeaders = {};
+let apiRequest = new ApiRequest();
 
 function someStep() {
-    // console.log(data.testHeaders);
-    return service.fetch('post', 'employees', data.testPostData, requestHeaders)
+//i send post request with JSON body
+
+    apiRequest.method = 'post';
+    apiRequest.endpoint = 'employees';
+    apiRequest.body = data.testPostData;
+    // apiRequest.headers =
+
+    return service.fetch(apiRequest)
         .then((response) => responseResult = response)
-        .finally(() => request = new Request()) // resetowanie requesta
+        .finally(() => apiRequest = new ApiRequest())
 }
 
-function anotherStep() {
+function anotherStep(someHeaders) {
     // I set request headers:
-    const myHeaders = {};
-    for (let index = 0; index < data.testHeaders.length; index++) {
-        myHeaders[data.testHeaders[index][0]] = data.testHeaders[index][1];
+
+    // apiRequest.headers = {};
+    for (let index = 0; index < someHeaders.length; index++) {
+        apiRequest.headers[someHeaders[index][0]] = someHeaders[index][1];
     }
-     return requestHeaders = myHeaders;
+
+    // apiRequest.headers = myHeaders;
+
+    return apiRequest.headers;
 }
 
 function thirdStep() {
     return console.log(responseResult.hasStatus(201));
 }
 
+function fourthStep(data.testHeaders) {
+    // apiRequest.headers = {};
+    for (let index = 0; index < data.testHeaders.length; index++) {
+        apiRequest.headers[data.testHeaders[index][0]] = data.testHeaders[index][1];
+    }
+
+    // apiRequest.headers = myHeaders;
+
+    return apiRequest.headers;
+}
+
+anotherStep();
 someStep().then(() => thirdStep());
 
-// anotherStep();
-// someStep();
-// check();
-// check();
-// someStep();

@@ -1,28 +1,23 @@
 const fetch = require('node-fetch');
 const ApiResponse = require('./apiResponse');
 const config = require('./config');
-global.Headers = fetch.Headers;
-global.Request = fetch.Request;
 
 class RestApiService {
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
-        // const request = new Request(url, {method, body, headers: headers});
-
     }
 
     resolveUrl(endpoint) {
         return `${this.baseUrl}${endpoint}`;
     }
-
-    fetch(method, endpoint, payload = false, headers) {
-        const content = "Hello World";
-        // this.myHeaders.append("Content-type", 'test');
-
-        const url = this.resolveUrl(endpoint);
-        const body = payload ? JSON.stringify(payload) : undefined;
-
-        return fetch(url, {method, body, headers: this.headers})
+//method, endpoint, payload = false, headers
+    fetch(request) {
+        const url = this.resolveUrl(request.endpoint);
+        // request.headers = {
+        //     'Content-Type': 'application/json',
+        // };
+        console.log(request.headers)
+        return fetch(url, {method: request.method, body: request.body, headers: request.headers})
             .then(response => {
                 const contentType = response.headers.get("content-type");
                 if(contentType.startsWith("application/json")) {

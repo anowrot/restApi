@@ -1,9 +1,6 @@
 const _ = require('lodash');
 const Ajv = require('ajv');
 const ajv = new Ajv({ allErrors: true });
-const data = require('./testData');
-
-
 
 class ApiResponse {
     constructor(responseStatus, body, headers) {
@@ -13,6 +10,7 @@ class ApiResponse {
     }
 
     hasStatus(status) {
+        console.log(this.body);
         return this.status === status
     }
 
@@ -28,13 +26,6 @@ class ApiResponse {
         const isValid = test(this.body);
         return isValid ? true : { obj: this.body, error: test.errors };
     }
-
-    // testHeaders(testHeaders) {
-    //     const myHeaders = {};
-    //     for (let index = 0; index < testHeaders.length; index++) {
-    //         myHeaders[testHeaders[index][0]] = testHeaders[index][1];
-    //     }
-    // };
 }
 
 module.exports = ApiResponse;

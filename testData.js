@@ -2,7 +2,7 @@ module.exports = {
     testPostData:
         {
             "first_name": "adam",
-            "last_name": "test",
+            "last_name": "test1",
             "email": "sebastian@codingthesmartway.com"
         },
     serverResponse:
@@ -55,10 +55,10 @@ module.exports = {
         },
     testHeaders:
         [
-            ['Content-Type', 'test'],
-            ['accept', 'test'],
-            ['connection', 'test']
+            ['Content-Type', 'application/json']
+        ],
+    testHeaders2:
+        [
+            ['Content-Type', 'test']
         ]
-
-
 };
